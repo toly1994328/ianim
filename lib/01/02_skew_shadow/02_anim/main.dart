@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'color_text.dart';
+import 'skew_show_text.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 确定初始化
@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: Center(
-          child: AnimText(),
-        ))
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+            body: Center(
+              child: SkewShadowText(),
+            ))
     );
   }
 }
