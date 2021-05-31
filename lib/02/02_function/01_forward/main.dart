@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'circle_anim.dart';
+import 'anim_panel.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 确定初始化
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         home: Scaffold(
             body: Center(
-              child: CircleAnim(),
+              child: AnimPanel(),
             ))
     );
   }
