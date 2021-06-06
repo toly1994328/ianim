@@ -7,3 +7,5 @@ void main() {
       textDirection: TextDirection.ltr,
       child: RawGestureDetectorDemo()));
 }
+
+

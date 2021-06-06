@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 
 import 'anim_painter.dart';
 import 'point_data.dart';
@@ -14,10 +12,13 @@ class AnimPanel extends StatefulWidget {
 
 class _AnimPanelState extends State<AnimPanel>
     with SingleTickerProviderStateMixin {
-
   PointData points = PointData();
+
   AnimationController _ctrl;
+
   final Duration animDuration = const Duration(milliseconds: 1000);
+
+  Animation<double> sequenceAnim;
 
   @override
   void initState() {
@@ -26,7 +27,23 @@ class _AnimPanelState extends State<AnimPanel>
       vsync: this,
       duration: animDuration,
     )..addListener(_collectPoint);
-    // curve = CurvedAnimation(parent: _ctrl, curve: Curves.bounceOut);
+
+    sequenceAnim = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0,end: 0.5).chain(CurveTween(curve: Curves.ease)),
+          weight: 4.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(0.5),
+          weight: 2.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.5,end: 1.0).chain(CurveTween(curve: Curves.decelerate)),
+          weight: 4.0,
+        ),
+      ],
+    ).animate(_ctrl);
   }
 
   @override
@@ -37,24 +54,15 @@ class _AnimPanelState extends State<AnimPanel>
   }
 
   void _collectPoint() {
-    points.push(_ctrl.value);
+    points.push(sequenceAnim.value);
   }
-
 
   void _startAnim() async{
     points.clear();
-    _ctrl.reset();
-    print('fling start!---${DateTime.now().toIso8601String()}----------');
-    await _ctrl.fling(
-      velocity: 10,
-      springDescription: SpringDescription.withDampingRatio(
-        mass: 1.0,
-        stiffness: 500.0,
-        ratio: 3.0,
-      )
-    );
-    print('fling end!---${DateTime.now().toIso8601String()}----------');
-
+    print('start!---${DateTime.now().toIso8601String()}----------');
+    // await _ctrl.forward(from: 0);
+    await _ctrl.forward(from: 0);
+    print('done!---${DateTime.now().toIso8601String()}----------');
   }
 
   @override

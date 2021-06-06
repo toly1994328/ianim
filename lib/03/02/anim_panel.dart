@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 
 import 'anim_painter.dart';
 import 'point_data.dart';
@@ -14,10 +12,13 @@ class AnimPanel extends StatefulWidget {
 
 class _AnimPanelState extends State<AnimPanel>
     with SingleTickerProviderStateMixin {
-
   PointData points = PointData();
+
   AnimationController _ctrl;
+
   final Duration animDuration = const Duration(milliseconds: 1000);
+
+  Animation<double> curveAnim;
 
   @override
   void initState() {
@@ -26,7 +27,11 @@ class _AnimPanelState extends State<AnimPanel>
       vsync: this,
       duration: animDuration,
     )..addListener(_collectPoint);
-    // curve = CurvedAnimation(parent: _ctrl, curve: Curves.bounceOut);
+    // curveAnim = CurvedAnimation(parent: _ctrl, curve: Curves.bounceOut);
+    // curveAnim = CurvedAnimation(parent: _ctrl, curve: Curves.ease);
+    // curveAnim = CurvedAnimation(parent: _ctrl, curve: Curves.decelerate);
+    // curveAnim = CurvedAnimation(parent: _ctrl, curve: Curves.elasticOut);
+    curveAnim = CurvedAnimation(parent: _ctrl, curve: const SawTooth(3));
   }
 
   @override
@@ -37,24 +42,15 @@ class _AnimPanelState extends State<AnimPanel>
   }
 
   void _collectPoint() {
-    points.push(_ctrl.value);
+    points.push(curveAnim.value);
   }
-
 
   void _startAnim() async{
     points.clear();
-    _ctrl.reset();
-    print('fling start!---${DateTime.now().toIso8601String()}----------');
-    await _ctrl.fling(
-      velocity: 10,
-      springDescription: SpringDescription.withDampingRatio(
-        mass: 1.0,
-        stiffness: 500.0,
-        ratio: 3.0,
-      )
-    );
-    print('fling end!---${DateTime.now().toIso8601String()}----------');
-
+    print('start!---${DateTime.now().toIso8601String()}----------');
+    // await _ctrl.forward(from: 0);
+    await _ctrl.forward(from: 0);
+    print('done!---${DateTime.now().toIso8601String()}----------');
   }
 
   @override

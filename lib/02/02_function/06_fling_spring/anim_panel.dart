@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:ianim/02/02_function/06_fling_spring/spring_painter.dart';
 
 import 'anim_painter.dart';
 import 'point_data.dart';
@@ -25,6 +26,8 @@ class _AnimPanelState extends State<AnimPanel>
     _ctrl = AnimationController(
       vsync: this,
       duration: animDuration,
+      upperBound: 100,
+      lowerBound: 50
     )..addListener(_collectPoint);
     // curve = CurvedAnimation(parent: _ctrl, curve: Curves.bounceOut);
   }
@@ -49,7 +52,7 @@ class _AnimPanelState extends State<AnimPanel>
       velocity: 10,
       springDescription: SpringDescription.withDampingRatio(
         mass: 1.0,
-        stiffness: 500.0,
+        stiffness: 1000.0,
         ratio: 3.0,
       )
     );
@@ -61,12 +64,12 @@ class _AnimPanelState extends State<AnimPanel>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _startAnim,
-      child: CustomPaint(
-        painter: AnimPainter(points),
-        size: const Size(
-          200,
-          200,
-        ),
+      child: Container(
+        width: 200,
+        height: 200,
+        color: Colors.grey.withAlpha(11),
+        child: CustomPaint(
+            painter: SpringPainter(height: _ctrl)),
       ),
     );
   }
