@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'image_shine_wrapper.dart';
+import 'cross_loading.dart';
+import 'rotate_loading.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 确定初始化
@@ -25,25 +26,7 @@ class MyApp extends StatelessWidget {
               child: Wrap(
                 spacing: 50,
                 children:[
-                  CircleShineImage(
-                    image: AssetImage('assets/images/wy_300x200.jpg'),
-                    color: Colors.red,
-                    maxBlurRadius: 6,
-                    duration: Duration(seconds: 1),
-                    curve: Curves.easeIn,
-                  ),
-                  CircleShineImage(
-                    image: AssetImage('assets/images/icon_head.png'),
-                    color: Colors.purple,
-                    maxBlurRadius: 8,
-                    curve: Curves.ease,
-                  ),
-                  CircleShineImage(
-                    image: AssetImage('assets/images/icon_8.jpg'),
-                    color: Colors.blue,
-                    maxBlurRadius: 4,
-                    curve: Curves.decelerate,
-                  )
+                  RotateLoading()
                 ] ,
               ),
             ))
