@@ -76,22 +76,25 @@ class _ToggleRotateState extends State<ToggleRotate>
 
   double get rad => widget.clockwise ? _rotateAnim.value : -_rotateAnim.value;
 
+  void _toggleRotate() async {
+    widget.onTap?.call();
+    if (_rotated) {
+      await _controller.reverse();
+    } else {
+      await _controller.forward();
+    }
+    _rotated = !_rotated;
+    widget.onEnd?.call(_rotated);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        widget.onTap?.call();
-        if (_rotated) {
-          await _controller.reverse();
-        } else {
-          await _controller.forward();
-        }
-        _rotated = !_rotated;
-        widget.onEnd?.call(_rotated);
-      },
+      behavior: HitTestBehavior.opaque,
+      onTap: _toggleRotate,
       child: AnimatedBuilder(
         animation: _controller,
-        builder: (_, __) => Transform(
+        builder: (_, child) => Transform(
           transform: Matrix4.rotationZ(rad),
           alignment: Alignment.center,
           child: widget.child,

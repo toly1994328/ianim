@@ -34,11 +34,12 @@ class _CircleShineImageState extends State<CircleShineImage>
       vsync: this,
       duration: widget.duration,
     )..addListener(_handleAnimationChanged);
-    _ctrl.repeat(reverse: true);
 
     blurRadiusAnim = Tween<double>(begin: 0, end: widget.maxBlurRadius)
         .chain(CurveTween(curve: widget.curve))
         .animate(_ctrl);
+
+    _ctrl.repeat(reverse: true);
   }
 
   @override

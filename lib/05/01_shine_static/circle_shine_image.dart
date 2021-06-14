@@ -22,30 +22,7 @@ class CircleShineImage extends StatefulWidget {
   _CircleShineImageState createState() => _CircleShineImageState();
 }
 
-class _CircleShineImageState extends State<CircleShineImage>
-    with SingleTickerProviderStateMixin {
-  AnimationController _ctrl;
-  Animation<double> blurRadiusAnim;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    )..addListener(_handleAnimationChanged);
-    _ctrl.repeat(reverse: true);
-
-    blurRadiusAnim = Tween<double>(begin: 0, end: widget.maxBlurRadius)
-        .chain(CurveTween(curve: widget.curve))
-        .animate(_ctrl);
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
+class _CircleShineImageState extends State<CircleShineImage> {
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +35,9 @@ class _CircleShineImageState extends State<CircleShineImage>
           boxShadow: [
             BoxShadow(
                 color: widget.color,
-                blurRadius: blurRadiusAnim.value,
+                blurRadius: widget.maxBlurRadius,
                 spreadRadius: 0)
           ]),
     );
-  }
-
-  void _handleAnimationChanged() {
-    setState(() {});
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'image_shine_wrapper.dart';
+import 'circle_shine_image.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 确定初始化
