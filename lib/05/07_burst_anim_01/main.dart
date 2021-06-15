@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
             data: IconTheme.of(context).copyWith(color: Colors.white, size: 18),
             child: BurstMenu(
                 center: _buildMenu(),
+                burstMenuItemClick: _burstMenuItemClick,
                 menus: _buildMenuItems()),
           ),
         ),
@@ -87,5 +88,13 @@ class _HomePageState extends State<HomePage> {
                         const BorderRadius.all(Radius.circular(15.0))),
               ))
           .toList();
+
+  bool _burstMenuItemClick(int index) {
+    print("index:$index");
+    if(index ==0){
+      return false;
+    }
+    return true;
+  }
 }
 

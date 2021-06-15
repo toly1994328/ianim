@@ -6,12 +6,19 @@ import 'package:flutter/material.dart';
 /// contact me by email 1981462002@qq.com
 /// 说明:
 
+typedef BurstMenuItemClick = bool Function(int index);
+
 class BurstMenu extends StatefulWidget {
   final List<Widget> menus;
   final Widget center;
+  final BurstMenuItemClick burstMenuItemClick;
 
-  BurstMenu({Key key, @required this.menus, @required this.center})
-      : super(key: key);
+  BurstMenu({
+    Key key,
+    @required this.menus,
+    @required this.center,
+    this.burstMenuItemClick,
+  }) : super(key: key);
 
   @override
   BurstMenuState createState() => BurstMenuState();
@@ -44,10 +51,22 @@ class BurstMenuState extends State<BurstMenu>
     return Flow(
       delegate: _CircleFlowDelegate(_controller),
       children: [
-        ...widget.menus,
+        ...widget.menus.asMap().keys.map((int index) => GestureDetector(
+          onTap: () => _handleItemClick(index),
+          child: widget.menus[index],
+        )),
         GestureDetector(onTap: toggle, child: widget.center)
       ],
     );
+  }
+
+  void _handleItemClick(int index) {
+    if (widget.burstMenuItemClick == null) {
+      toggle();
+      return;
+    }
+    bool close = widget.burstMenuItemClick.call(index);
+    if (close) toggle();
   }
 
   void toggle() {
