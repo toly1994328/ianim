@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 
 enum BurstType {
   circle,
-  topLeft, // startAngle: 0,swapAngle: 90
-  bottomLeft, //startAngle:  -90,swapAngle: 90
-  topRight, // startAngle: 180,swapAngle: -90
-  bottomRight, // startAngle: 180,swapAngle: 90
-  halfCircle, //
+  topLeft,
+  bottomLeft,
+  topRight,
+  bottomRight,
+  halfCircle,
 }
 
 typedef BurstMenuItemClick = bool Function(int index);
@@ -50,7 +50,6 @@ class BurstMenu extends StatefulWidget {
     this.center,
     this.hideOpacity = 0,
     this.curve = Curves.ease,
-
     this.duration = const Duration(milliseconds: 300),
     this.burstType = BurstType.topLeft,
     this.swapAngle = 90,
@@ -64,7 +63,6 @@ class BurstMenu extends StatefulWidget {
     this.center,
     this.hideOpacity = 0,
     this.curve = Curves.ease,
-
     this.duration = const Duration(milliseconds: 300),
     this.burstType = BurstType.bottomLeft,
     this.swapAngle = 90,
@@ -78,7 +76,6 @@ class BurstMenu extends StatefulWidget {
     this.center,
     this.hideOpacity = 0,
     this.curve = Curves.ease,
-
     this.duration = const Duration(milliseconds: 500),
     this.burstType = BurstType.topRight,
     this.swapAngle = -90,
@@ -92,7 +89,6 @@ class BurstMenu extends StatefulWidget {
     this.center,
     this.hideOpacity = 0,
     this.curve = Curves.ease,
-
     this.duration = const Duration(milliseconds: 300),
     this.burstType = BurstType.bottomRight,
     this.swapAngle = 90,
@@ -110,6 +106,7 @@ class BurstMenuState extends State<BurstMenu>
   // 是否已关闭
   bool _closed = true;
   Animation<double> curveAnim; // 1.定义曲线动画
+
   @override
   void initState() {
     super.initState();
@@ -158,6 +155,20 @@ class BurstMenuState extends State<BurstMenu>
     }
     bool close = widget.burstMenuItemClick.call(index);
     if (close) toggle();
+  }
+
+  @override
+  void didUpdateWidget(BurstMenu oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.duration != oldWidget.duration) {
+      _controller.dispose();
+      _controller = AnimationController(duration: widget.duration, vsync: this);
+    }
+    if (widget.curve != oldWidget.curve ||
+        widget.duration != oldWidget.duration) {
+      curveAnim = CurvedAnimation(parent: _controller, curve: widget.curve);
+    }
   }
 
   void toggle() {

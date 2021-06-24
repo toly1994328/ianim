@@ -1,7 +1,12 @@
 import 'dart:math' as math;
-import 'dart:ui';
+// import 'dart:ui';
+
+
+
 
 main() {
+  print(DateTime.now().millisecondsSinceEpoch);
+
   // List<int> nums = [0, 1, 2, 3, 4, 5, 6, 7,0];
   //
   // List<int> nums1 = nums.where((e) => e > 10).toList();
@@ -15,13 +20,13 @@ main() {
   // Shape circle = Circle(radius: 10);
   // double area = circle.getArea();
 
-  Shape triangle = Triangle(
-    p0: Offset.zero,
-    p1: Offset(2, 0),
-    p2: Offset(1, 1),
-  );
-  double area = triangle.getArea();
-  print(area);
+  // Shape triangle = Triangle(
+  //   p0: Offset.zero,
+  //   p1: Offset(2, 0),
+  //   p2: Offset(1, 1),
+  // );
+  // double area = triangle.getArea();
+  // print(area);
 }
 
 double getCircle(double radius) {
@@ -43,26 +48,26 @@ class Circle extends Shape {
   }
 }
 
-class Triangle extends Shape {
-  final Offset p0;
-  final Offset p1;
-  final Offset p2;
-
-  Triangle({
-    this.p0 = Offset.zero,
-    this.p1 = Offset.zero,
-    this.p2 = Offset.zero,
-  });
-
-  @override
-  double getArea() {
-    double a = (p0 - p1).distance;
-    double b = (p1 - p2).distance;
-    double c = (p2 - p0).distance;
-
-    double s = (a + b + c) / 2;
-    double area = math.sqrt(s * (s - a) * (s - b) * (s - c));
-
-    return area;
-  }
-}
+// class Triangle extends Shape {
+//   final Offset p0;
+//   final Offset p1;
+//   final Offset p2;
+//
+//   Triangle({
+//     this.p0 = Offset.zero,
+//     this.p1 = Offset.zero,
+//     this.p2 = Offset.zero,
+//   });
+//
+//   @override
+//   double getArea() {
+//     double a = (p0 - p1).distance;
+//     double b = (p1 - p2).distance;
+//     double c = (p2 - p0).distance;
+//
+//     double s = (a + b + c) / 2;
+//     double area = math.sqrt(s * (s - a) * (s - b) * (s - c));
+//
+//     return area;
+//   }
+// }
