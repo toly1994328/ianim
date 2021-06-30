@@ -28,6 +28,10 @@ class _AnimPanelState extends State<AnimPanel>
       duration: animDuration,
     )..addListener(_collectPoint);
     curveAnim = CurveTween(curve: Curves.bounceOut).animate(_ctrl);
+
+   Curve flippedCurve = FlippedCurve(Curves.bounceOut);
+
+
   }
 
   @override
