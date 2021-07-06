@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ianim/paint_helper/dash_painter.dart';
 
-import 'ext.dart';
 import 'polar.dart';
 
 class PainterHelper {

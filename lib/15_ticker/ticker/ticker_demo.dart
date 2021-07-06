@@ -12,11 +12,12 @@ class _TickerDemoState extends State<TickerDemo> {
   @override
   void initState() {
     super.initState();
+    // SchedulerBinding.instance.scheduleFrameCallback(_tick);
     _ticker = Ticker(_tick);
   }
 
   void _tick(Duration elapsed) {
-    print('----elapsed:$elapsed---------------');
+    print('----elapsed:$elapsed---${TimeOfDay.now()}------------');
   }
 
   @override
@@ -37,10 +38,13 @@ class _TickerDemoState extends State<TickerDemo> {
   }
 
   void _startTicker() {
-   if(_ticker.isTicking){
-     _ticker.stop();
-   }else{
-     _ticker.start();
-   }
+
+    if (_ticker.isTicking) {
+      _ticker.stop();
+    } else {
+      _ticker.start().then((v) {
+        print('start finish!');
+      });
+    }
   }
 }
